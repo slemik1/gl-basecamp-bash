@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+function division () {
+
+num1=$1 num2=$2
+
+if [[ $num1 == ?(-)+([0-9]) ]]; then
+   variable_num1_a=$num1
+   variable_num1_b=0
+elif [[ $num1 =~ ^[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)$ ]]; then
+   variable_num1_a=${num1%.*}
+   variable_num1_b=${num1#*.}
+fi
+
+if [[ $num2 == ?(-)+([0-9]) ]]
+then
+   variable_num2_a=$num2
+   variable_num2_b=0
+else
+   variable_num2_a=${num2%.*}
+   variable_num2_b=${num2#*.}
+fi
+
+remove_dot_num1=$(echo $variable_num1_a$variable_num1_b)
+remove_dot_num2=$(echo $variable_num2_a$variable_num2_b)
+
+result_division_num1_and_num2=$(( remove_dot_num1 / remove_dot_num2))
+result_modulo_division_num1_and_num2=$(( remove_dot_num1 % remove_dot_num2))
+
+if [[ $result_modulo_division_num1_and_num2 -gt 0 ]]
+then
+   value_after_dot=$(($remove_dot_num2 / result_modulo_division_num1_and_num2))
+fi
+
+if [[ $result_modulo_division_num1_and_num2 -eq 0 ]]
+then
+   echo $result_division_num1_and_num2
+else
+   result=$(echo $result_division_num1_and_num2.$value_after_dot)
+   echo $result
+fi
+
+}

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+function subtraction () {
+
+num1=$1 num2=$2
+
+if [[ $num1 == ?(-)+([0-9]) ]]; then
+   variable_num1_a=$num1
+   variable_num1_b=0
+elif [[ $num1 =~ ^[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)$ ]]; then
+   variable_num1_a=${num1%.*}
+   variable_num1_b=${num1#*.}
+fi
+
+if [[ $num2 == ?(-)+([0-9]) ]]
+then
+   variable_num2_a=$num2
+   variable_num2_b=0
+else
+   variable_num2_a=${num2%.*}
+   variable_num2_b=${num2#*.}
+fi
+
+result_subtraction_num1_a_and_num2_a=$(( variable_num1_a - variable_num2_a))
+result_subtraction_num1_b_and_num2_b=$(( variable_num1_b - variable_num2_b))
+
+if [ "$result_subtraction_num1_b_and_num2_b" -lt "0" ]
+then
+   let "result_subtraction_num1_a_and_num2_a = result_subtraction_num1_a_and_num2_a - 1"
+   let "result_subtraction_num1_b_and_num2_b = result_subtraction_num1_b_and_num2_b + 10"
+fi
+
+if [[ $result_subtraction_num1_b_and_num2_b -eq 0 ]]
+then
+   echo $result_subtraction_num1_a_and_num2_a
+else
+   result=$(echo $result_subtraction_num1_a_and_num2_a.$result_subtraction_num1_b_and_num2_b)
+   echo $result
+fi
+
+}
